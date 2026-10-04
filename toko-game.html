@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelTop - Top Up Game & Voucher Murah 24 Jam</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --neon-cyan: #00f0ff;
+    --neon-purple: #b829ff;
+    --neon-pink: #ff2d92;
+    --neon-green: #00ff88;
+    --dark-bg: #0a0a1a;
+    --dark-card: #13132a;
+    --dark-card-2: #1a1a35;
+    --text-light: #ffffff;
+    --text-gray: #a0a0c0;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-light);
+    overflow-x: hidden;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+  }
+  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--neon-cyan);
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(100vh); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 16px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    -webkit-text-fill-color: white;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+    50% { box-shadow: 0 0 35px rgba(184, 41, 255, 0.8); }
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-gray);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    padding: 6px 0;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--neon-cyan); }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 50%;
+    width: 0; height: 2px;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+    transition: all 0.3s;
+    transform: translateX(-50%);
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .cart-btn {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: var(--neon-cyan);
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .cart-btn:hover { background: rgba(0, 240, 255, 0.2); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+  .cart-badge {
+    position: absolute;
+    top: -4px; right: -4px;
+    background: var(--neon-pink);
+    color: white;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px var(--neon-pink);
+  }
+  .btn-login {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: white;
+    padding: 10px 22px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+    font-family: inherit;
+  }
+  .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 240, 255, 0.6); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 120px 6% 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 10%; left: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(184, 41, 255, 0.2), transparent);
+    border-radius: 50%;
+    z-index: -1;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 10%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.15), transparent);
+    border-radius: 50%;
+    z-index: -1;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--neon-cyan);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+  }
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--neon-green);
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+  }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .hero p {
+    font-size: 1rem;
+    color: var(--text-gray);
+    margin-bottom: 30px;
+    line-height: 1.7;
+    max-width: 480px;
+  }
+  .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 35px; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4);
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 240, 255, 0.6); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--neon-cyan);
+    padding: 14px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 2px solid rgba(0, 240, 255, 0.4);
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-secondary:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--neon-cyan); }
+  .hero-stats {
+    display: flex;
+    gap: 36px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(0, 240, 255, 0.15);
+    flex-wrap: wrap;
+  }
+  .stat h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat p { font-size: 0.83rem; color: var(--text-gray); font-weight: 500; }
+  .hero-image { position: relative; display: flex; justify-content: center; align-items: center; }
+  .hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    border-radius: 30px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card-2));
+    border: 2px solid rgba(0, 240, 255, 0.3);
+    box-shadow: 0 30px 80px rgba(0, 240, 255, 0.3);
+    animation: float 5s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+  .hero-emoji { font-size: 12rem; filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.6)); }
+  .floating-tag {
+    position: absolute;
+    background: rgba(19, 19, 42, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    animation: float 4s ease-in-out infinite;
+  }
+  .tag-1 { top: 15%; left: -8%; animation-delay: -1s; color: var(--neon-green); }
+  .tag-2 { bottom: 20%; right: -5%; animation-delay: -2s; color: var(--neon-pink); }
+  .tag-3 { top: 60%; left: -10%; animation-delay: -3s; color: var(--neon-cyan); }
+  .tag-emoji { font-size: 1.1rem; margin-right: 6px; }
+
+  /* SECTION TITLE */
+  .section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 2;
+  }
+  .section-title .badge {
+    display: inline-block;
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--neon-cyan);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+  }
+  .section-title h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.3rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+  }
+  .section-title h2 span {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .section-title p { color: var(--text-gray); font-size: 1rem; max-width: 600px; margin: 0 auto; }
+
+  /* CATEGORIES */
+  .categories-section { padding: 80px 6%; position: relative; z-index: 2; }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .category-card {
+    background: var(--dark-card);
+    padding: 28px 20px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  .category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .category-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 15px 35px rgba(0, 240, 255, 0.25);
+  }
+  .category-card:hover::before { opacity: 1; }
+  .category-icon {
+    font-size: 2.6rem;
+    margin-bottom: 12px;
+    display: block;
+    filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+    position: relative;
+  }
+  .category-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--text-light); position: relative; }
+  .category-card p { font-size: 0.78rem; color: var(--text-gray); margin-top: 4px; position: relative; }
+
+  /* GAMES */
+  .games-section {
+    padding: 80px 6%;
+    background: linear-gradient(180deg, var(--dark-bg), var(--dark-card) 50%, var(--dark-bg));
+    position: relative;
+    z-index: 2;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .filter-tab {
+    background: var(--dark-card);
+    color: var(--text-gray);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    padding: 10px 22px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+  .filter-tab:hover, .filter-tab.active {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4);
+  }
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .game-card {
+    background: var(--dark-card);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s;
+    border: 1px solid rgba(0, 240, 255, 0.1);
+    cursor: pointer;
+  }
+  .game-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 20px 50px rgba(0, 240, 255, 0.3);
+  }
+  .game-card-image {
+    height: 170px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a35, #2a1a45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .game-emoji { font-size: 5rem; filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.5)); }
+  .game-tag {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--neon-pink);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(255, 45, 146, 0.5);
+  }
+  .game-rating {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    color: #fbbf24;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    z-index: 2;
+  }
+  .game-card-body { padding: 18px; }
+  .game-card-body h3 { font-size: 1.1rem; font-weight: 700; color: var(--text-light); margin-bottom: 6px; }
+  .game-card-body .cat-name {
+    font-size: 0.75rem;
+    color: var(--neon-cyan);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .game-card-body p {
+    font-size: 0.83rem;
+    color: var(--text-gray);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    min-height: 38px;
+  }
+  .game-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+  }
+  .price-box .price-old {
+    font-size: 0.78rem;
+    color: var(--text-gray);
+    text-decoration: line-through;
+    display: block;
+  }
+  .price-box .price-new {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--neon-green);
+  }
+  .buy-btn {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.83rem;
+    transition: all 0.3s;
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+  }
+  .buy-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(184, 41, 255, 0.6); }
+
+  /* DEALS */
+  .deals-section { padding: 80px 6%; position: relative; z-index: 2; }
+  .deals-banner {
+    background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+    border-radius: 30px;
+    padding: 50px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(184, 41, 255, 0.4);
+  }
+  .deals-banner::after {
+    content: '🎮';
+    position: absolute;
+    font-size: 14rem;
+    opacity: 0.15;
+    bottom: -40px; right: -20px;
+  }
+  .deals-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .deals-banner h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .deals-banner p {
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+    opacity: 0.95;
+    position: relative;
+  }
+  .deals-timer {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 28px;
+    position: relative;
+    flex-wrap: wrap;
+  }
+  .timer-box {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 14px 20px;
+    border-radius: 14px;
+    min-width: 80px;
+  }
+  .timer-box .num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 900;
+    display: block;
+  }
+  .timer-box .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+  .deals-btn {
+    background: white;
+    color: var(--neon-purple);
+    padding: 14px 36px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  }
+  .deals-btn:hover { transform: translateY(-3px); }
+
+  /* FEATURES */
+  .features-section { padding: 80px 6%; background: var(--dark-card); position: relative; z-index: 2; }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    background: var(--dark-card-2);
+    padding: 28px 22px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 240, 255, 0.1);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 240, 255, 0.15);
+  }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-icon {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(184, 41, 255, 0.2));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 18px;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+  }
+  .feature-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+  .feature-card p { font-size: 0.88rem; color: var(--text-gray); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testi-section { padding: 80px 6%; position: relative; z-index: 2; }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .testi-card {
+    background: var(--dark-card);
+    padding: 28px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    transition: all 0.3s;
+  }
+  .testi-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 15px 35px rgba(0, 240, 255, 0.2);
+  }
+  .testi-stars { color: #fbbf24; margin-bottom: 14px; font-size: 1.1rem; }
+  .testi-card p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text-gray);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .testi-user { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: white;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+  }
+  .testi-user h5 { font-weight: 700; color: var(--text-light); font-size: 0.95rem; }
+  .testi-user span { font-size: 0.8rem; color: var(--text-gray); }
+
+  /* NEWSLETTER */
+  .newsletter-section { padding: 80px 6%; position: relative; z-index: 2; }
+  .newsletter-box {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card-2));
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    padding: 50px 40px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .newsletter-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(0, 240, 255, 0.1), transparent 60%);
+  }
+  .newsletter-box h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .newsletter-box p { color: var(--text-gray); margin-bottom: 26px; font-size: 1rem; position: relative; }
+  .newsletter-form {
+    display: flex;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .newsletter-form input {
+    flex: 1;
+    background: var(--dark-bg);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    color: var(--text-light);
+    padding: 14px 20px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s;
+  }
+  .newsletter-form input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+  .newsletter-form input::placeholder { color: var(--text-gray); }
+  .newsletter-form button {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+  }
+  .newsletter-form button:hover { transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark-card);
+    padding: 60px 6% 24px;
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+    position: relative;
+    z-index: 2;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto 30px;
+  }
+  .footer-col h4 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--neon-cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+  }
+  .footer-col p, .footer-col a {
+    color: var(--text-gray);
+    font-size: 0.88rem;
+    line-height: 1.9;
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--neon-cyan); }
+  .footer-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .footer-desc { font-size: 0.88rem; color: var(--text-gray); margin-bottom: 16px; line-height: 1.7; }
+  .social-icons { display: flex; gap: 10px; }
+  .social-icons a {
+    width: 40px; height: 40px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-radius: 10px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+  .social-icons a:hover {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: white;
+    transform: translateY(-3px);
+  }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+    color: var(--text-gray);
+    font-size: 0.85rem;
+  }
+
+  /* FLOATING CHAT */
+  .chat-float {
+    position: fixed;
+    bottom: 25px; right: 25px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: white;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(0, 240, 255, 0.5);
+    z-index: 99;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    animation: pulse 2s infinite;
+  }
+  .chat-float:hover { transform: scale(1.1) rotate(10deg); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    background: var(--dark-card-2);
+    color: var(--text-light);
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--neon-green);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transform: translateX(400px);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    max-width: 320px;
+  }
+  .toast.show { transform: translateX(0); }
+  .toast-icon {
+    width: 30px; height: 30px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-bg);
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 110px; }
+    .hero h1 { font-size: 2.3rem; }
+    .hero p { margin: 0 auto 30px; }
+    .hero-ba uttons { justify-content: center; }
+    .hero-stats { justify-content: center; flex-wrap: wrap; gap: 24px; }
+    .nav-links { display: none; }
+    .section-title h2 { font-size: 1.8rem; }
+    .deals-banner h2 { font-size: 2rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .floating-tag { display: none; }
+    .newsletter-form { flex-direction: column; }
+    .games-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  }
+  @media (max-width: 500px) {
+    .hero h1 { font-size: 1.8rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .deals-banner { padding: 40px 24px; }
+    .deals-banner h2 { font-size: 1.5rem; }
+    .timer-box { min-width: 65px; padding: 10px 14px; }
+    .timer-box .num { font-size: 1.4rem; }
+    .category-grid { grid-template-columns: repeat(2, 1fr); }
+    .newsletter-box { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">🎮</div>
+    PIXELTOP
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Beranda</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#deals">Promo</a></li>
+    <li><a href="#features">Keunggulan</a></li>
+    <li><a href="#testi">Review</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="showToast('Keranjang kosong. Yuk mulai belanja!')">
+      🛒<span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <button class="btn-login" onclick="showToast('Fitur login segera hadir! 🚀')">Masuk</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">⚡ Server Online 24/7</div>
+    <h1>Top Up Game<br><span class="gradient">Cepat, Aman,<br>& Murah!</span></h1>
+    <p>Platform top up voucher & diamond game favoritmu. Proses otomatis kurang dari 1 menit, harga termurah, dan CS 24 jam nonstop!</p>
+    <div class="hero-buttons">
+      <a href="#games" class="btn-primary">🎮 Lihat Games</a>
+      <a href="#deals" class="btn-secondary">🔥 Promo Hari Ini</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <h3 id="stat1">0</h3>
+        <p>Member Aktif</p>
+      </div>
+      <div class="stat">
+        <h3 id="stat2">0</h3>
+        <p>Rating Trustpilot</p>
+      </div>
+      <div class="stat">
+        <h3 id="stat3">0</h3>
+        <p>Game Tersedia</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="floating-tag tag-1"><span class="tag-emoji">⚡</span>Instant</div>
+    <div class="floating-tag tag-2"><span class="tag-emoji">💎</span>Murah</div>
+    <div class="floating-tag tag-3"><span class="tag-emoji">🔒</span>Aman</div>
+    <div class="hero-image-wrapper">
+      <div class="hero-emoji">🎮</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="section-title">
+    <div class="badge">📂 Kategori</div>
+    <h2>Pilih <span>Kategori</span> Game</h2>
+    <p>Temukan game favoritmu dari berbagai genre populer</p>
+  </div>
+  <div class="category-grid">
+    <div class="category-card"><span class="category-icon">⚔️</span><h4>MOBA</h4><p>8 Games</p></div>
+    <div class="category-card"><span class="category-icon">🔫</span><h4>Battle Royale</h4><p>12 Games</p></div>
+    <div class="category-card"><span class="category-icon">🗡️</span><h4>RPG</h4><p>15 Games</p></div>
+    <div class="category-card"><span class="category-icon">⚽</span><h4>Sports</h4><p>6 Games</p></div>
+    <div class="category-card"><span class="category-icon">🚀</span><h4>Adventure</h4><p>10 Games</p></div>
+    <div class="category-card"><span class="category-icon">🎯</span><h4>FPS</h4><p>9 Games</p></div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section class="games-section" id="games">
+  <div class="section-title">
+    <div class="badge">🔥 Hot Games</div>
+    <h2>Game <span>Populer</span></h2>
+    <p>Top up diamond, UC, atau voucher game favoritmu di sini</p>
+  </div>
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all">Semua</button>
+    <button class="filter-tab" data-filter="moba">MOBA</button>
+    <button class="filter-tab" data-filter="battle">Battle Royale</button>
+    <button class="filter-tab" data-filter="rpg">RPG</button>
+    <button class="filter-tab" data-filter="voucher">Voucher</button>
+  </div>
+  <div class="games-grid" id="gamesGrid"></div>
+</section>
+
+<!-- DEALS -->
+<section class="deals-section" id="deals">
+  <div class="deals-banner">
+    <div class="deals-tag">⚡ FLASH SALE 24 JAM</div>
+    <h2>Diskon Gila-Gilaan!</h2>
+    <p>Dapatkan diamond & voucher hingga 70% OFF. Buruan order sebelum kehabisan!</p>
+    <div class="deals-timer">
+      <div class="timer-box"><span class="num" id="hours">12</span><span class="label">Jam</span></div>
+      <div class="timer-box"><span class="num" id="minutes">45</span><span class="label">Menit</span></div>
+      <div class="timer-box"><span class="num" id="seconds">30</span><span class="label">Detik</span></div>
+    </div>
+    <a href="#games" class="deals-btn">⚡ Klaim Sekarang</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="section-title">
+    <div class="badge">💎 Keunggulan</div>
+    <h2>Kenapa Pilih <span>PixelTop</span>?</h2>
+    <p>Lebih dari sekadar top up biasa</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h4>Proses Instant</h4>
+      <p>Diamond masuk dalam hitungan detik setelah pembayaran sukses. Tanpa antri, tanpa riba!</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <h4>Harga Termurah</h4>
+      <p>Garansi harga termurah atau refund 100%. Banyak promo dan cashback setiap hari.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h4>Transaksi Aman</h4>
+      <p>Sistem keamanan SSL 256-bit & enkripsi data. Privasi 100% terlindungi.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h4>CS 24/7</h4>
+      <p>Customer service siap melayani via WhatsApp kapanpun. Fast response kurang dari 5 menit.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎁</div>
+      <h4>Bonus Setiap Hari</h4>
+      <p>Login harian dapat bonus diamond gratis. Ada misi & event berhadiah menarik tiap minggu.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <h4>Top Up 24 Jam</h4>
+      <p>Server online nonstop. Top up kapanpun, dimanapun, bahkan tengah malam sekalipun.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section" id="testi">
+  <div class="section-title">
+    <div class="badge">⭐ Review</div>
+    <h2>Kata <span>Pelanggan</span> Kami</h2>
+    <p>Lebih dari 50.000+ pelanggan puas telah mempercayai PixelTop</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p>"Cepet banget top up ML cuma 5 detik udah masuk! Harganya juga paling murah dibanding tempat lain. Recommended!"</p>
+      <div class="testi-user">
+        <div class="testi-avatar">AR</div>
+        <div><h5>Andi Rafli</h5><span>Gamers Mobile Legends</span></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p>"Udah langganan di sini 3 tahun. Pembayaran gampang via QRIS, prosesnya kilat, tidak pernah ada masalah."</p>
+      <div class="testi-user">
+        <div class="testi-avatar">SK</div>
+        <div><h5>Siti Khadijah</h5><span>Streamer PUBG Mobile</span></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p>"CS-nya ramah banget, pernah ada masalah langsung disolve. Top up Genshin jadi gampang dan aman!"</p>
+      <div class="testi-user">
+        <div class="testi-avatar">BP</div>
+        <div><h5>Budi Pratama</h5><span>Player Genshin Impact</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="newsletter-box">
+    <h2>📬 Dapatkan Promo Spesial</h2>
+    <p>Subscribe newsletter & dapatkan diskon 20% untuk top up pertama!</p>
+    <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+      <input type="email" placeholder="Email kamu..." required>
+      <button type="submit">Subscribe 🚀</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-logo">🎮 PIXELTOP</div>
+      <p class="footer-desc">Platform top up game #1 di Indonesia. Cepat, aman, dan harga paling murah.</p>
+      <div class="social-icons">
+        <a href="#" title="Instagram">📷</a>
+        <a href="#" title="TikTok">🎵</a>
+        <a href="#" title="YouTube">▶️</a>
+        <a href="#" title="Discord">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Games</h4>
+      <a href="#">Mobile Legends</a>
+      <a href="#">Free Fire</a>
+      <a href="#">PUBG Mobile</a>
+      <a href="#">Genshin Impact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Bantuan</h4>
+      <a href="#">Cara Order</a>
+      <a href="#">Metode Bayar</a>
+      <a href="#">Status Pesanan</a>
+      <a href="#">Hubungi CS</a>
+    </div>
+    <div class="footer-col">
+      <h4>Perusahaan</h4>
+      <a href="#">Tentang Kami</a>
+      <a href="#">Kebijakan Privasi</a>
+      <a href="#">Syarat & Ketentuan</a>
+      <a href="#">Karir</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 PixelTop. All rights reserved. Made with 💜 for gamers.
+  </div>
+</footer>
+
+<!-- FLOATING CHAT -->
+<button class="chat-float" onclick="showToast('Live chat WhatsApp: +62 812-3456-7890')">💬</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon">✓</div>
+  <span id="toastMsg">Item ditambahkan!</span>
+</div>
+
+<script>
+// ====== PARTICLES ======
+(function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const colors = ['#00f0ff', '#b829ff', '#ff2d92', '#00ff88'];
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.boxShadow = '0 0 10px ' + p.style.background;
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.width = p.style.height = (3 + Math.random() * 4) + 'px';
+    container.appendChild(p);
+  }
+})();
+
+// ====== GAMES DATA ======
+const games = [
+  { name: 'Mobile Legends', cat: 'moba', emoji: '⚔️', catName: 'MOBA 5v5', desc: 'Top up Diamond ML termurah, proses kilat 1 menit!', oldPrice: 15000, newPrice: 12500, rating: 4.9, tag: 'BEST' },
+  { name: 'Free Fire', cat: 'battle', emoji: '🔥', catName: 'Battle Royale', desc: 'Diamond FF murah, semua nominal tersedia 24 jam.', oldPrice: 20000, newPrice: 17500, rating: 4.8, tag: 'HOT' },
+  { name: 'PUBG Mobile', cat: 'battle', emoji: '🔫', catName: 'Battle Royale', desc: 'UC PUBG Mobile cepat & aman. Banyak bonus events!', oldPrice: 25000, newPrice: 22000, rating: 4.9, tag: 'NEW' },
+  { name: 'Genshin Impact', cat: 'rpg', emoji: '🌟', catName: 'RPG Adventure', desc: 'Genesis Crystal Genshin asli, welcome moon ready.', oldPrice: 50000, newPrice: 47000, rating: 4.7, tag: '' },
+  { name: 'Valorant', cat: 'voucher', emoji: '🎯', catName: 'FPS 5v5', desc: 'Voucher Valorant point. Auto accept via Riot ID.', oldPrice: 30000, newPrice: 26500, rating: 4.8, tag: '' },
+  { name: 'Honkai Star Rail', cat: 'rpg', emoji: '🚄', catName: 'RPG Turn-Based', desc: 'Oneiric Shard HSR aman & instant delivery.', oldPrice: 45000, newPrice: 42000, rating: 4.9, tag: 'NEW' },
+  { name: 'Steam Wallet', cat: 'voucher', emoji: '🎮', catName: 'Voucher Game', desc: 'Steam Wallet IDR langsung masuk ke akun Steam.', oldPrice: 100000, newPrice: 95000, rating: 5.0, tag: '' },
+  { name: 'Call of Duty Mobile', cat: 'battle', emoji: '💥', catName: 'Battle Royale', desc: 'CP CODM termurah se-Indonesia, fast process!', oldPrice: 22000, newPrice: 19500, rating: 4.8, tag: 'PROMO' }
+];
+
+// ====== RENDER GAMES ======
+function renderGames(filter = 'all') {
+  const grid = document.getElementById('gamesGrid');
+  const list = filter === 'all' ? games : games.filter(g => g.cat === filter);
+  grid.innerHTML = list.map(g => `
+    <div class="game-card">
+      <div class="game-card-image">
+        ${g.tag ? '<span class="game-tag">' + g.tag + '</span>' : ''}
+        <span class="game-rating">⭐ ${g.rating}</span>
+        <div class="game-emoji">${g.emoji}</div>
+      </div>
+      <div class="game-card-body">
+        <h3>${g.name}</h3>
+        <div class="cat-name">${g.catName}</div>
+        <p>${g.desc}</p>
+        <div class="game-price-row">
+          <div class="price-box">
+            <span class="price-old">Rp ${formatNum(g.oldPrice)}</span>
+            <span class="price-new">Rp ${formatNum(g.newPrice)}</span>
+          </div>
+          <button class="buy-btn" onclick="addToCart('${g.name}')">Beli</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function formatNum(n) { return n.toLocaleString('id-ID'); }
+
+// ====== FILTER TABS ======
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderGames(tab.dataset.filter);
+  });
+});
+
+// ====== CART ======
+let cartCount = 0;
+function addToCart(name) {
+  cartCount++;
+  document.getElementById('cartBadge').textContent = cartCount;
+  showToast(name + ' ditambahkan ke keranjang!');
+}
+
+// ====== TOAST ======
+let toastTimer;
+function showToast(msg) {
+  document.getElementById('toastMsg').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ====== NEWSLETTER ======
+function handleNewsletter(e) {
+  e.preventDefault();
+  showToast('Terima kasih! Cek email untuk diskon 20% 🎉');
+  e.target.reset();
+}
+
+// ====== COUNTDOWN TIMER ======
+let totalSeconds = 12 * 3600 + 45 * 60 + 30;
+setInterval(() => {
+  if (totalSeconds <= 0) totalSeconds = 24 * 3600;
+  totalSeconds--;
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  document.getElementById('hours').textContent = String(h).padStart(2, '0');
+  document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+  document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+}, 1000);
+
+// ====== COUNTER ANIMATION ======
+function animateCounter(el, target) {
+  const dur = 2000;
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / dur, 1);
+    const val = Math.floor(p * target);
+    let display;
+    if (target === 48) {
+      // Rating: divide by 10 to show as 4.8
+      display = (val / 10).toFixed(1) + '/5';
+    } else if (target >= 100) {
+      display = val + '+';
+    } else {
+      display = val + 'K+';
+    }
+    el.textContent = display;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ====== INTERSECTION OBSERVER ======
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      if (e.target.id && e.target.id.startsWith('stat')) {
+        const targets = { stat1: 52, stat2: 48, stat3: 150 };
+        if (targets[e.target.id]) animateCounter(e.target, targets[e.target.id]);
+      }
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.stat h3, .category-card, .game-card, .feature-card, .testi-card, .deals-banner').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+  observer.observe(el);
+});
+
+// INIT
+renderGames();
+</script>
+</body>
+</html>
